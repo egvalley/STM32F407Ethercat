@@ -57,6 +57,19 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LAN9252_RST_Pin GPIO_PIN_8
+#define LAN9252_RST_GPIO_Port GPIOF
+#define LAN9252_IRQ_Pin GPIO_PIN_0
+#define LAN9252_IRQ_GPIO_Port GPIOC
+#define LAN9252_IRQ_EXTI_IRQn EXTI0_IRQn
+#define LAN9252_SYNC1_Pin GPIO_PIN_1
+#define LAN9252_SYNC1_GPIO_Port GPIOC
+#define LAN9252_SYNC1_EXTI_IRQn EXTI1_IRQn
+#define LAN9252_SYNC0_Pin GPIO_PIN_3
+#define LAN9252_SYNC0_GPIO_Port GPIOC
+#define LAN9252_SYNC0_EXTI_IRQn EXTI3_IRQn
+#define LAN9252_CS_Pin GPIO_PIN_8
+#define LAN9252_CS_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

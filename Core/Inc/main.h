@@ -68,6 +68,8 @@ void Error_Handler(void);
 #define LAN9252_SYNC0_Pin GPIO_PIN_3
 #define LAN9252_SYNC0_GPIO_Port GPIOC
 #define LAN9252_SYNC0_EXTI_IRQn EXTI3_IRQn
+#define LED1_Pin GPIO_PIN_12
+#define LED1_GPIO_Port GPIOB
 #define LAN9252_CS_Pin GPIO_PIN_8
 #define LAN9252_CS_GPIO_Port GPIOA
 

@@ -22,6 +22,9 @@ set(MX_Include_Dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/CMSIS/Device/ST/STM32F4xx/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/CMSIS/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes/include/sys/gcc
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../EtherCAT
 )
 
 # STM32CubeMX generated application sources
@@ -36,6 +39,8 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/stm32f4xx_hal_msp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/sysmem.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/syscalls.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../EtherCAT/ecat_app.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../EtherCAT/objectlist.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../startup_stm32f407xx.s
 )
 
@@ -82,6 +87,12 @@ set(FreeRTOS_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
 )
+set(SOES_Src
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes/esc.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes/esc_coe.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes/ecat_slv.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/soes/hal/stm32-lan9252/esc_hw.c
+)
 
 # Link directories setup
 set(MX_LINK_DIRS
@@ -91,7 +102,7 @@ set(MX_LINK_DIRS
 set(MX_LINK_LIBS 
     STM32_Drivers
     ${TOOLCHAIN_LINK_LIBRARIES}
-    USB_Device_Library	FreeRTOS	
+    USB_Device_Library	FreeRTOS	SOES	
 )
 # Interface library for includes and symbols
 add_library(stm32cubemx INTERFACE)
@@ -113,6 +124,11 @@ target_link_libraries(USB_Device_Library PUBLIC stm32cubemx)
 add_library(FreeRTOS OBJECT)
 target_sources(FreeRTOS PRIVATE ${FreeRTOS_Src})
 target_link_libraries(FreeRTOS PUBLIC stm32cubemx)
+
+# Create SOES static library
+add_library(SOES OBJECT)
+target_sources(SOES PRIVATE ${SOES_Src})
+target_link_libraries(SOES PUBLIC stm32cubemx)
 
 # Add STM32CubeMX generated application sources to the project
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${MX_Application_Src})
